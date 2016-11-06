@@ -1,0 +1,16 @@
+#root {
+    height: 100%;
+    text-align: center;
+}
+
+.box-canvas {
+    text-align: center;
+}
+
+.done-text {
+    text-decoration: line-through;
+}
+
+.empty-text {
+    font-style: italic;
+}

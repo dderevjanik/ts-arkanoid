@@ -60,7 +60,7 @@ var debugForm = [
     [0, 0, 0, 0, 4, 0, 0, 0]
 ];
 // formation1, formation2, formation3
-var formations = [debugForm];
+var formations = [formation1, formation2, formation3];
 var generateBlock = function (x, y) {
     var formationIndex = Math.floor(Math.random() * formations.length);
     var formation = formations[formationIndex];
@@ -217,16 +217,17 @@ var update = function () {
 var setListeners = function () {
     var leftBtnEl = document.getElementById('leftBtn');
     var rightBtnEl = document.getElementById('rightBtn');
-    leftBtnEl.addEventListener('touchstart', function () {
+    leftBtnEl.addEventListener('mousedown', function () {
         leftPad = 1;
     });
-    leftBtnEl.addEventListener('touchend', function () {
+
+    leftBtnEl.addEventListener('mouseup', function () {
         leftPad = 0;
     });
-    rightBtnEl.addEventListener('touchstart', function () {
+    rightBtnEl.addEventListener('mousedown', function () {
         rightPad = 1;
     });
-    rightBtnEl.addEventListener('touchend', function () {
+    rightBtnEl.addEventListener('mouseup', function () {
         rightPad = 0;
     });
 };

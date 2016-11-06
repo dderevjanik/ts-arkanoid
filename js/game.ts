@@ -274,16 +274,16 @@ const setListeners = () => {
     const leftBtnEl = document.getElementById('leftBtn');
     const rightBtnEl = document.getElementById('rightBtn');
 
-    leftBtnEl.addEventListener('touchstart', () => {
+    leftBtnEl.addEventListener('mousedown', () => {
         leftPad = 1;
     });
-    leftBtnEl.addEventListener('touchend', () => {
+    leftBtnEl.addEventListener('mouseup', () => {
         leftPad = 0;
     });
-    rightBtnEl.addEventListener('touchstart', () => {
+    rightBtnEl.addEventListener('mousedown', () => {
         rightPad = 1;
     });
-    rightBtnEl.addEventListener('touchend', () => {
+    rightBtnEl.addEventListener('mouseup', () => {
         rightPad = 0;
     });
 }
