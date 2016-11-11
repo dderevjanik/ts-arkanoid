@@ -1,0 +1,14 @@
+{
+    "compilerOptions": {
+        "module": "system",
+        "outFile": "build/js/game.js",
+        "strictNullChecks": true
+    },
+    "files": [
+        "src/game.ts",
+        "src/Mechanics.ts"
+    ],
+    "exclude": [
+        "node_modules"
+    ]
+}
