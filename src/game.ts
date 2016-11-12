@@ -15,8 +15,8 @@ import {
     getBlockScore
 } from './Mechanics';
 
-declare const leftBtnEl: HTMLButtonElement;
-declare const rightBtnEl: HTMLButtonElement;
+const leftBtnEl: HTMLButtonElement = window.document.getElementById('left-btn');
+const rightBtnEl: HTMLButtonElement = window.document.getElementById('right-btn');
 
 const formations = [Formation1];
 
@@ -126,7 +126,7 @@ const update = (state: IAppState) => {
     setTimeout(() => update(state), 1000 / 30);
 };
 
-const setListeners = () => {
+const addListeners = () => {
     const leftBtnEl = document.getElementById('leftBtn');
     const rightBtnEl = document.getElementById('rightBtn');
 
@@ -142,6 +142,6 @@ const setListeners = () => {
 }
 
 window.onload = () => {
-    setListeners();
+    addListeners();
     update(InitState);
 }

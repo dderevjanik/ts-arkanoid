@@ -3,6 +3,7 @@ import { IBall } from './interfaces/IBall';
 import { IBlock } from './interfaces/IBlock';
 import { IRect } from './interfaces/IRect';
 import { BlockType } from './data/BlockType';
+import { BALL_COLOR, PLAYER_COLOR, HIGHLIGHT_COLOR } from './data/Constants';
 
 type Context2D = CanvasRenderingContext2D;
 
@@ -14,15 +15,15 @@ const renderBlocks = (g: Context2D, blocks: IBlock[], w: number, h: number) => {
 };
 
 const renderPlayer = (g: Context2D, player: IRect) => {
-    g.fillStyle = "white";
+    g.fillStyle = PLAYER_COLOR;
     g.fillRect(player.x, player.y, player.w, player.h);
 };
 
 const renderBall = (g: Context2D, ball: IBall) => {
     if (ball.blink) {
-        g.fillStyle = "yellow";
+        g.fillStyle = BALL_COLOR;
     } else {
-        g.fillStyle = "#00FFFF";
+        g.fillStyle = HIGHLIGHT_COLOR;
     }
     g.fillRect(ball.x, ball.y, ball.w, ball.h);
 };

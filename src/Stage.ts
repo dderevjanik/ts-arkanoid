@@ -1,4 +1,5 @@
 import { IStage } from './interfaces/IStage';
+import { IBlock } from './interfaces/IBlock';
 import { Formation } from './Types';
 
 const getRandomFormation = (formations: Formation[]): Formation => {
@@ -7,7 +8,7 @@ const getRandomFormation = (formations: Formation[]): Formation => {
 };
 
 export const generateNewStage = (sx: number, sy: number, bw: number, bh: number, formations: Formation[]): IStage => {
-    const blocks = [];
+    const blocks: IBlock[] = [];
     let count = 0;
 
     getRandomFormation(formations).forEach((row, r) => {
