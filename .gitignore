@@ -1,0 +1,2 @@
+# compiled typescript files
+build/js/**/*.js

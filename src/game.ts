@@ -1,5 +1,5 @@
 // need more refactor
-const canvasEl = <HTMLCanvasElement>document.getElementById('canvas');
+const canvasEl = <HTMLCanvasElement> document.getElementById('canvas');
 import { InitState } from './data/InitState';
 import { IAppState } from './interfaces/IAppState';
 import { IPoint } from './interfaces/IPoint';
@@ -15,8 +15,8 @@ import {
     getBlockScore
 } from './Mechanics';
 
-const leftBtnEl: HTMLButtonElement = window.document.getElementById('left-btn');
-const rightBtnEl: HTMLButtonElement = window.document.getElementById('right-btn');
+const leftBtnEl: HTMLButtonElement|any = window.document.getElementById('left-btn');
+const rightBtnEl: HTMLButtonElement|any = window.document.getElementById('right-btn');
 
 const formations = [Formation1];
 
@@ -44,7 +44,7 @@ const handleInputs = (player: IRect) => {
             player.x += 7;
         }
     };
-}
+};
 
 const generateNewLevel = (state: IAppState) => {
     state.ball.dx += 2;
@@ -76,8 +76,8 @@ const updateBall = (state: IAppState) => {
         }
         resetPositions(state);
     }
-    const nX = ball.x + ball.dx;
-    const nY = ball.y + ball.dy;
+    const nX = (ball.x + ball.dx);
+    const nY = (ball.y + ball.dy);
     if (isOutsideLeft(nX) || isOutsideRight(nX, canvas.w)) {
         ball.dx = -ball.dx;
     }
@@ -86,7 +86,7 @@ const updateBall = (state: IAppState) => {
     }
     ball.x += ball.dx;
     ball.y += ball.dy;
-}
+};
 
 const clearInput = () => {
     leftPad = 0;
@@ -115,7 +115,7 @@ const detectCollision = (state: IAppState) => {
         ball.dy = -ball.dy;
     }
 
-}
+};
 
 const update = (state: IAppState) => {
     // clearScreen();
@@ -127,8 +127,8 @@ const update = (state: IAppState) => {
 };
 
 const addListeners = () => {
-    const leftBtnEl = document.getElementById('leftBtn');
-    const rightBtnEl = document.getElementById('rightBtn');
+    const leftBtnEl: any = document.getElementById('leftBtn');
+    const rightBtnEl: any = document.getElementById('rightBtn');
 
     leftBtnEl.addEventListener('mousedown', () => { leftPad = 1; });
     leftBtnEl.addEventListener('mouseup', () => { leftPad = 0; });
@@ -139,9 +139,9 @@ const addListeners = () => {
     rightBtnEl.addEventListener('touchstart', () => { rightPad = 1; });
     rightBtnEl.addEventListener('touchend', () => { rightPad = 0; });
 
-}
+};
 
 window.onload = () => {
     addListeners();
     update(InitState);
-}
+};
