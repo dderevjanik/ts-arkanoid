@@ -7,6 +7,7 @@ import { ICanvas } from './interfaces/ICanvas';
 import { IRect } from './interfaces/IRect';
 import { render } from './Render';
 import { generateNewStage } from './Stage';
+import { clearScreen } from './Utils';
 import { Formation1 } from './Data/Formation1';
 import {
     inCollision, getCollisions,
@@ -82,23 +83,26 @@ const resetPositions = (state: IAppState) => {
  */
 const updateBall = (state: IAppState) => {
     const ball = state.ball;
-    // detect collision with bottom wall
-    if (ball.y + ball.dy > 300) {
+    // detect collision with bottom screen
+    if ((ball.y + ball.dy) > 300) {
         ball.dy = -ball.dy;
         state.lives -= 1;
+        // if lives < 0, 'reset' whole game
         if (state.lives < 0) {
             resetData(state);
         }
         resetPositions(state);
     }
+    // prediction for next position
     const nX = (ball.x + ball.dx);
     const nY = (ball.y + ball.dy);
     if (isOutsideLeft(nX) || isOutsideRight(nX, canvas.w)) {
-        ball.dx = -ball.dx;
+        ball.dx = -ball.dx; // reverse horizontal direction
     }
     if (isOutsideDown(nY) || isOutsideUp(nY, canvas.h)) {
-        ball.dy = -ball.dy;
+        ball.dy = -ball.dy; // reverse vertical direction
     }
+    // move to next position
     ball.x += ball.dx;
     ball.y += ball.dy;
 };
@@ -126,6 +130,7 @@ const detectCollision = (state: IAppState) => {
         state.score += getBlockScore(block);
         state.stage.blocks.splice(index, 1);
         state.stage.blockCount -= 1;
+        // if number of blocks are 0, create new level
         if (state.stage.blockCount === 0) {
             generateNewLevel(state);
             resetPositions(state);
@@ -144,7 +149,7 @@ const detectCollision = (state: IAppState) => {
  * Update current state
  */
 const update = (state: IAppState) => {
-    // clearScreen();
+    clearScreen(canvas.g, canvas.w, canvas.h);
     handleInputs(state.player);
     updateBall(state);
     detectCollision(state);
@@ -156,8 +161,8 @@ const update = (state: IAppState) => {
  * Add Event listeners to DOM
  */
 const addListeners = () => {
-    const leftBtnEl: any = document.getElementById('leftBtn');
-    const rightBtnEl: any = document.getElementById('rightBtn');
+    const leftBtnEl: any = document.getElementById('left-btn');
+    const rightBtnEl: any = document.getElementById('right-btn');
 
     leftBtnEl.addEventListener('mousedown', () => { leftPad = 1; });
     leftBtnEl.addEventListener('mouseup', () => { leftPad = 0; });
@@ -167,10 +172,10 @@ const addListeners = () => {
     rightBtnEl.addEventListener('mouseup', () => { rightPad = 0; });
     rightBtnEl.addEventListener('touchstart', () => { rightPad = 1; });
     rightBtnEl.addEventListener('touchend', () => { rightPad = 0; });
-
 };
 
 window.onload = () => {
     addListeners();
+    generateNewLevel(InitState);
     update(InitState);
 };

@@ -1,6 +1,5 @@
-import { IAppState } from './../interfaces/IAppState';
-
-export const InitState: IAppState = {
+"use strict";
+exports.InitState = {
     blockSize: {
         h: 10,
         w: 30

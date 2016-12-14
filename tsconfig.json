@@ -1,9 +1,9 @@
 {
     "compilerOptions": {
-        "module": "es6",
+        "module": "none",
         "strictNullChecks": true
     },
     "files": [
-        "src/**/*.ts"
+        "src/Game.ts"
     ]
 }

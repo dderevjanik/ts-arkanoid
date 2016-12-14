@@ -21,11 +21,11 @@ export const generateNewStage = (sx: number, sy: number, bw: number, bh: number,
         row.forEach((col, c) => {
             if (col !== 0) {
                 blocks.push({
-                    blockType: col,
+                    blockType: (col - 1),
                     x: sx + c * bw + c * 3,
                     y: sy + r * bh + r * 3,
-                    w: 8,
-                    h: 8
+                    w: bw,
+                    h: bh
                 });
                 count++;
             }

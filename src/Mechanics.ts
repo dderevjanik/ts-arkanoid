@@ -15,7 +15,7 @@ export const inCollision = (rect1: IRect, rect2: IRect): boolean =>
  * Return all objects, which are in collision with rectangle
  */
 export const getCollisions = <T extends IRect>(rect: IRect, rects: T[]): T[] =>
-    rects.filter((r) => inCollision(r, rect));
+    rects.filter((r) => inCollision(rect, r));
 
 /**
  * Get block's score
