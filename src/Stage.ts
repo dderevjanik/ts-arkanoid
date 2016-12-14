@@ -2,11 +2,17 @@ import { IStage } from './interfaces/IStage';
 import { IBlock } from './interfaces/IBlock';
 import { Formation } from './Types';
 
+/**
+ * Return new enemy formation
+ */
 const getRandomFormation = (formations: Formation[]): Formation => {
     const formationIndex = Math.floor(Math.random() * formations.length);
     return formations[formationIndex];
 };
 
+/**
+ * Will generate new stage, only new blocks
+ */
 export const generateNewStage = (sx: number, sy: number, bw: number, bh: number, formations: Formation[]): IStage => {
     const blocks: IBlock[] = [];
     let count = 0;
@@ -17,7 +23,9 @@ export const generateNewStage = (sx: number, sy: number, bw: number, bh: number,
                 blocks.push({
                     blockType: col,
                     x: sx + c * bw + c * 3,
-                    y: sy + r * bh + r * 3
+                    y: sy + r * bh + r * 3,
+                    w: 8,
+                    h: 8
                 });
                 count++;
             }

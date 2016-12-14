@@ -3,10 +3,6 @@ import { IAppState } from './../interfaces/IAppState';
 export const InitState: IAppState = {
     score: 0,
     lives: 3,
-    blockSize: {
-        w: 8,
-        h: 8
-    },
     ball: {
         x: 142,
         y: 260,

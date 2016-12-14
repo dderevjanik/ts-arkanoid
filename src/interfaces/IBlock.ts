@@ -1,5 +1,5 @@
-import { IPoint } from './IPoint';
+import { IRect } from './IRect';
 
-export interface IBlock extends IPoint {
+export interface IBlock extends IRect {
     blockType: number;
 }

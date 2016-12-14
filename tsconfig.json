@@ -5,22 +5,6 @@
         "strictNullChecks": true
     },
     "files": [
-        "src/data/BlockType.ts",
-        "src/data/Constants.ts",
-        "src/data/Formation1.ts",
-        "src/data/Formation2.ts",
-        "src/data/Formation3.ts",
-        "src/data/FormationDebug.ts",
-        "src/data/InitState.ts",
-        "src/enums/EDir.ts",
-        "src/game.ts",
-        "src/Mechanics.ts",
-        "src/Render.ts",
-        "src/Stage.ts",
-        "src/Types.ts",
-        "src/Utils.ts"
-    ],
-    "exclude": [
-        "node_modules"
+        "src/**/*.js"
     ]
 }

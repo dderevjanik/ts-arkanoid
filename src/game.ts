@@ -33,6 +33,9 @@ const canvas: ICanvas = {
     h: canvasEl.height
 };
 
+/**
+ * Handle player inputs
+ */
 const handleInputs = (player: IRect) => {
     if (leftPad === 1) {
         if (player.x - 7 > 0) {
@@ -46,18 +49,27 @@ const handleInputs = (player: IRect) => {
     };
 };
 
+/**
+ * Will generate new level with ball centered in above paddle
+ */
 const generateNewLevel = (state: IAppState) => {
     state.ball.dx += 2;
     state.ball.dy += 2;
     state.stage = generateNewStage(20, 1, state.blockSize.w, state.blockSize.h, formations);
 };
 
+/**
+ * Reset current player's data
+ */
 const resetData = (state: IAppState) => {
     state.lives = 3;
     state.score = 0;
     generateNewLevel(state);
 };
 
+/**
+ * Reset paddle and ball positions
+ */
 const resetPositions = (state: IAppState) => {
     state.player.x = 110;
     state.player.y = 280;
@@ -65,10 +77,13 @@ const resetPositions = (state: IAppState) => {
     state.ball.y = 260;
 };
 
+/**
+ * Update ball state
+ */
 const updateBall = (state: IAppState) => {
     const ball = state.ball;
+    // detect collision with bottom wall
     if (ball.y + ball.dy > 300) {
-        // up collision
         ball.dy = -ball.dy;
         state.lives -= 1;
         if (state.lives < 0) {
@@ -88,17 +103,24 @@ const updateBall = (state: IAppState) => {
     ball.y += ball.dy;
 };
 
+/**
+ * Clear current inputs
+ */
 const clearInput = () => {
     leftPad = 0;
     rightPad = 0;
 };
 
+/**
+ * Detect collision with block objects
+ */
 const detectCollision = (state: IAppState) => {
     const ball = state.ball;
     const player = state.player;
     const collisions = getCollisions(state.ball, state.stage.blocks);
     ball.dy = (collisions.length % 2 === 0) ? ball.dy : -ball.dy;
 
+    // remove all blocks with collision, add score and decrease blocks count
     collisions.forEach((block) => {
         const index = state.stage.blocks.indexOf(block);
         state.score += getBlockScore(block);
@@ -111,12 +133,16 @@ const detectCollision = (state: IAppState) => {
         }
     });
 
+    // check if playes is in collision with player
     if (inCollision(state.player, state.ball)) {
         ball.dy = -ball.dy;
     }
 
 };
 
+/**
+ * Update current state
+ */
 const update = (state: IAppState) => {
     // clearScreen();
     handleInputs(state.player);
@@ -126,6 +152,9 @@ const update = (state: IAppState) => {
     setTimeout(() => update(state), 1000 / 30);
 };
 
+/**
+ * Add Event listeners to DOM
+ */
 const addListeners = () => {
     const leftBtnEl: any = document.getElementById('leftBtn');
     const rightBtnEl: any = document.getElementById('rightBtn');
