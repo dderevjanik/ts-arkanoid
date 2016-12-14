@@ -1,2 +1,5 @@
+# javascript modules
+node_modules/
+
 # compiled typescript files
 build/js/**/*.js

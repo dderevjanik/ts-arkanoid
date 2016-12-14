@@ -1,0 +1,25 @@
+{
+  "name": "ts-arkanoid",
+  "version": "1.0.0",
+  "description": "arkonoid written in typescript",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "ts": "tsc --watch",
+    "dev": "webpack-dev-server build/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dderevjanik/ts-arkanoid.git"
+  },
+  "author": "daniel.derevjanik@gmail.com",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/dderevjanik/ts-arkanoid/issues"
+  },
+  "homepage": "https://github.com/dderevjanik/ts-arkanoid#readme",
+  "devDependencies": {
+    "typescript": "^2.1.4",
+    "webpack-dev-server": "^1.16.2"
+  }
+}

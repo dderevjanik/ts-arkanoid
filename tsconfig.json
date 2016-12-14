@@ -1,10 +1,9 @@
 {
     "compilerOptions": {
-        "module": "system",
-        "outDir": "build/js",
+        "module": "es6",
         "strictNullChecks": true
     },
     "files": [
-        "src/**/*.js"
+        "src/**/*.ts"
     ]
 }
