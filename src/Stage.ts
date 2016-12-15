@@ -1,11 +1,16 @@
 import { IStage } from './interfaces/IStage';
 import { IBlock } from './interfaces/IBlock';
+import { IAppState } from './interfaces/IAppState';
+import { Formation1, Formation2, Formation3 } from './data/Formations';
 import { Formation } from './Types';
+
+// List of possible enemy formations to generate
+const formations = [Formation1, Formation2, Formation3];
 
 /**
  * Return new enemy formation
  */
-const getRandomFormation = (formations: Formation[]): Formation => {
+const getRandomFormation = (): Formation => {
     const formationIndex = Math.floor(Math.random() * formations.length);
     return formations[formationIndex];
 };
@@ -13,11 +18,11 @@ const getRandomFormation = (formations: Formation[]): Formation => {
 /**
  * Will generate new stage, only new blocks
  */
-export const generateNewStage = (sx: number, sy: number, bw: number, bh: number, formations: Formation[], stage: IStage): IStage => {
+const generateNewStage = (sx: number, sy: number, bw: number, bh: number, stage: IStage): IStage => {
     const blocks: IBlock[] = [];
     let count = 0;
 
-    getRandomFormation(formations).forEach((row, r) => {
+    getRandomFormation().forEach((row, r) => {
         row.forEach((col, c) => {
             if (col !== 0) {
                 blocks.push({
@@ -38,4 +43,13 @@ export const generateNewStage = (sx: number, sy: number, bw: number, bh: number,
         score: (stage.score * stage.scoreInc),
         scoreInc: stage.score
     };
+};
+
+/**
+ * Will generate new level with ball centered in above paddle
+ */
+export const generateNewLevel = (state: IAppState) => {
+    state.ball.dx += state.ball.lvlSpeedInc;
+    state.ball.dy += state.ball.lvlSpeedInc;
+    state.stage = generateNewStage(20, 1, state.blockSize.w, state.blockSize.h, state.stage);
 };

@@ -8,7 +8,15 @@ import { BALL_COLOR, PLAYER_COLOR, HIGHLIGHT_COLOR } from './data/Constants';
 type Context2D = CanvasRenderingContext2D;
 
 /**
- * Render block
+ * Clear whole screen
+ */
+export const clearScreen = (g: CanvasRenderingContext2D, w: number, h: number) => {
+    g.clearRect(0, 0, w, h);
+};
+
+
+/**
+ * Render blocks
  */
 const renderBlocks = (g: Context2D, blocks: IBlock[], w: number, h: number) => {
     blocks.forEach((block) => {
@@ -40,9 +48,14 @@ const renderBall = (g: Context2D, ball: IBall) => {
 /**
  * Render game's UI
  */
-const renderUI = (g: Context2D, score: number, lives: number) => {
-    g.fillText("S: " + score, 1, 300);
-    g.fillText("L: " + lives, 280, 300);
+const renderUI = (g: Context2D, score: number, lives: number, lvl: number) => {
+    g.fillText("S: " + score, 1, 299);
+    g.fillText("L: " + lives, 240, 299);
+    if (lvl < 10) {
+        g.fillText("LVL: 0" + lvl, 265, 299);
+    } else {
+        g.fillText("LVL: " + lvl, 265, 299);
+    }
 };
 
 /**
@@ -52,5 +65,5 @@ export const render = (g: Context2D, appState: IAppState) => {
     renderBlocks(g, appState.stage.blocks, appState.blockSize.w, appState.blockSize.h);
     renderPlayer(g, appState.player);
     renderBall(g, appState.ball);
-    renderUI(g, appState.score, appState.lives);
+    renderUI(g, appState.score.score, appState.score.lives, appState.score.level);
 };

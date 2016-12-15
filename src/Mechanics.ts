@@ -1,6 +1,19 @@
+import { IBall } from './interfaces/IBall';
 import { IBlock } from './interfaces/IBlock';
+import { IPlayer } from './interfaces/IPlayer';
 import { IRect } from './interfaces/IRect';
 import { BlockType } from './data/BlockType';
+import * as CONST from './data/Constants';
+
+/**
+ * Reset paddle and ball positions
+ */
+export const resetPositions = (player: IPlayer, ball: IBall) => {
+    player.x = CONST.PADDLE_INIT_X;
+    player.y = CONST.PADDLE_INIT_Y;
+    ball.x = CONST.BALL_INIT_X;
+    ball.y = CONST.BALL_INIT_Y;
+};
 
 /**
  * Check if rectangle is in collision with other rectangle
