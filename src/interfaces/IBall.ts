@@ -4,4 +4,5 @@ import { IBlink } from './IBlink';
 export interface IBall extends IRect, IBlink {
     dx: number;
     dy: number;
+    lvlSpeedInc: number;
 };

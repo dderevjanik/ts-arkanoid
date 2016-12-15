@@ -13,7 +13,7 @@ const getRandomFormation = (formations: Formation[]): Formation => {
 /**
  * Will generate new stage, only new blocks
  */
-export const generateNewStage = (sx: number, sy: number, bw: number, bh: number, formations: Formation[]): IStage => {
+export const generateNewStage = (sx: number, sy: number, bw: number, bh: number, formations: Formation[], stage: IStage): IStage => {
     const blocks: IBlock[] = [];
     let count = 0;
 
@@ -34,6 +34,8 @@ export const generateNewStage = (sx: number, sy: number, bw: number, bh: number,
 
     return {
         blocks: blocks,
-        blockCount: count
+        blockCount: count,
+        score: (stage.score * stage.scoreInc),
+        scoreInc: stage.score
     };
 };

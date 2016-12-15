@@ -5,10 +5,12 @@ import { IAppState } from './interfaces/IAppState';
 import { IPoint } from './interfaces/IPoint';
 import { ICanvas } from './interfaces/ICanvas';
 import { IRect } from './interfaces/IRect';
+import { IPlayer } from './interfaces/IPlayer';
 import { render } from './Render';
 import { generateNewStage } from './Stage';
 import { clearScreen } from './Utils';
-import { Formation1 } from './Data/Formation1';
+import { EKeyState } from './enums/EKeyState';
+import { Formation1, Formation2, Formation3 } from './Data/Formations';
 import {
     inCollision, getCollisions,
     isOutsideLeft, isOutsideRight,
@@ -19,13 +21,13 @@ import {
 const leftBtnEl: HTMLButtonElement|any = window.document.getElementById('left-btn');
 const rightBtnEl: HTMLButtonElement|any = window.document.getElementById('right-btn');
 
-const formations = [Formation1];
+const formations = [Formation1, Formation2, Formation3];
 
 canvasEl.width = 300;
 canvasEl.height = 300;
 
-let leftPad = 0;
-let rightPad = 0;
+let leftPad = EKeyState.UP;
+let rightPad = EKeyState.UP;
 
 const canvas: ICanvas = {
     el: canvasEl,
@@ -37,15 +39,15 @@ const canvas: ICanvas = {
 /**
  * Handle player inputs
  */
-const handleInputs = (player: IRect) => {
+const handleInputs = (player: IPlayer) => {
     if (leftPad === 1) {
-        if (player.x - 7 > 0) {
-            player.x -= 7;
+        if ((player.x - player.v) > 0) {
+            player.x -= player.v;
         }
     }
     if (rightPad === 1) {
-        if (player.x + player.w + 7 < 300) {
-            player.x += 7;
+        if ((player.x + player.w + player.v) < 300) {
+            player.x += player.v;
         }
     };
 };
@@ -54,9 +56,9 @@ const handleInputs = (player: IRect) => {
  * Will generate new level with ball centered in above paddle
  */
 const generateNewLevel = (state: IAppState) => {
-    state.ball.dx += 2;
-    state.ball.dy += 2;
-    state.stage = generateNewStage(20, 1, state.blockSize.w, state.blockSize.h, formations);
+    state.ball.dx += state.ball.lvlSpeedInc;
+    state.ball.dy += state.ball.lvlSpeedInc;
+    state.stage = generateNewStage(20, 1, state.blockSize.w, state.blockSize.h, formations, state.stage);
 };
 
 /**
@@ -111,8 +113,8 @@ const updateBall = (state: IAppState) => {
  * Clear current inputs
  */
 const clearInput = () => {
-    leftPad = 0;
-    rightPad = 0;
+    leftPad = EKeyState.UP;
+    rightPad = EKeyState.UP;
 };
 
 /**
@@ -164,14 +166,15 @@ const addListeners = () => {
     const leftBtnEl: any = document.getElementById('left-btn');
     const rightBtnEl: any = document.getElementById('right-btn');
 
-    leftBtnEl.addEventListener('mousedown', () => { leftPad = 1; });
-    leftBtnEl.addEventListener('mouseup', () => { leftPad = 0; });
-    leftBtnEl.addEventListener('touchstart', () => { leftPad = 1; });
-    leftBtnEl.addEventListener('touchend', () => { leftPad = 0; });
-    rightBtnEl.addEventListener('mousedown', () => { rightPad = 1; });
-    rightBtnEl.addEventListener('mouseup', () => { rightPad = 0; });
-    rightBtnEl.addEventListener('touchstart', () => { rightPad = 1; });
-    rightBtnEl.addEventListener('touchend', () => { rightPad = 0; });
+    leftBtnEl.addEventListener('mousedown', () => { leftPad = EKeyState.PRESS; });
+    leftBtnEl.addEventListener('mouseup', () => { leftPad = EKeyState.UP; });
+    leftBtnEl.addEventListener('touchstart', () => { leftPad = EKeyState.PRESS; });
+    leftBtnEl.addEventListener('touchend', () => { leftPad = EKeyState.UP; });
+
+    rightBtnEl.addEventListener('mousedown', () => { rightPad = EKeyState.PRESS; });
+    rightBtnEl.addEventListener('mouseup', () => { rightPad = EKeyState.UP; });
+    rightBtnEl.addEventListener('touchstart', () => { rightPad = EKeyState.PRESS; });
+    rightBtnEl.addEventListener('touchend', () => { rightPad = EKeyState.UP; });
 };
 
 window.onload = () => {

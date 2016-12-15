@@ -1,4 +1,4 @@
 export enum EDir {
-    left,
-    right
+    LEFT,
+    RIGHT
 };

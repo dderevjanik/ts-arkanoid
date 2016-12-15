@@ -6,10 +6,10 @@ import { BlockType } from './data/BlockType';
  * Check if rectangle is in collision with other rectangle
  */
 export const inCollision = (rect1: IRect, rect2: IRect): boolean =>
-    (rect1.x < rect2.x + rect2.w &&
-        rect1.x + rect1.w > rect2.x &&
-        rect1.y < rect2.y + rect2.h &&
-        rect1.h + rect1.y > rect2.y) ? true : false;
+    ((rect1.x < rect2.x + rect2.w) &&
+    (rect1.x + rect1.w > rect2.x) &&
+    (rect1.y < rect2.y + rect2.h) &&
+    (rect1.h + rect1.y > rect2.y)) ? true : false;
 
 /**
  * Return all objects, which are in collision with rectangle
