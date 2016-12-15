@@ -1,7 +1,9 @@
 module.exports = {
-  entry: './src/Game.js',
+  entry: './src/Game.ts',
   output: {
     filename: 'bundle.js',
+    path: __dirname + '/build/js',
+    publicPath: 'build/js'
   },
   resolve: {
     // Add `.ts` and `.tsx` as a resolvable extension.
@@ -12,5 +14,5 @@ module.exports = {
       // all files with a `.ts` or `.tsx` extension will be handled by `ts-loader`
       { test: /\.tsx?$/, loader: 'ts-loader' }
     ]
-  }
+  },
 }
