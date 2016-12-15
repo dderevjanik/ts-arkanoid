@@ -2,7 +2,7 @@ import { IBall } from './interfaces/IBall';
 import { IBlock } from './interfaces/IBlock';
 import { IPlayer } from './interfaces/IPlayer';
 import { IRect } from './interfaces/IRect';
-import { BlockType } from './data/BlockType';
+import { BlockType } from './data/info/BlockType';
 import * as CONST from './data/Constants';
 
 /**

@@ -1,5 +1,6 @@
 import { IAppState } from './../interfaces/IAppState';
 import { EKeyState } from './../enums/EKeyState';
+import { EPowerUp } from './../enums/EPowerUp';
 import * as CONST from './../data/Constants';
 
 /**
@@ -36,11 +37,24 @@ export const InitState: IAppState = {
         x: 110,
         y: 280,
         w: 80,
+        ew: 15,
         h: 10,
-        v: 7
+        v: 7,
+        powerUps: {
+            size: {
+                type: EPowerUp.SIZE,
+                timeleft: 0
+            },
+            fire: {
+                type: EPowerUp.FIRE,
+                timeleft: 0
+            }
+        }
     },
     controls: {
         leftpaddle: EKeyState.UP,
         rightpaddle: EKeyState.UP
-    }
+    },
+    items: [],
+    nextItem: 1
 };

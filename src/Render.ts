@@ -1,9 +1,10 @@
 import { IAppState } from './interfaces/IAppState';
 import { IBall } from './interfaces/IBall';
 import { IBlock } from './interfaces/IBlock';
-import { IRect } from './interfaces/IRect';
-import { BlockType } from './data/BlockType';
-import { BALL_COLOR, PLAYER_COLOR, HIGHLIGHT_COLOR } from './data/Constants';
+import { IPlayer } from './interfaces/IPlayer';
+import { IItem } from './interfaces/IItem';
+import { BlockType } from './data/info/BlockType';
+import { BALL_COLOR, PLAYER_COLOR, HIGHLIGHT_COLOR, PLAYER_PWR_COLOR, BALL_FIRE_COLOR } from './data/Constants';
 
 type Context2D = CanvasRenderingContext2D;
 
@@ -25,22 +26,34 @@ const renderBlocks = (g: Context2D, blocks: IBlock[], w: number, h: number) => {
     });
 };
 
+const renderItems = (g: Context2D, items: IItem[]) => {
+    items.forEach((item) => {
+        g.fillStyle = 'yellow';
+        g.fillRect(item.x, item.y, item.w, item.h);
+    });
+};
+
 /**
  * Render player
  */
-const renderPlayer = (g: Context2D, player: IRect) => {
+const renderPlayer = (g: Context2D, player: IPlayer) => {
     g.fillStyle = PLAYER_COLOR;
     g.fillRect(player.x, player.y, player.w, player.h);
+    g.fillStyle = PLAYER_PWR_COLOR;
+    g.fillRect(player.x, player.y, player.ew, player.h);
+    g.fillRect(player.x + player.w - player.ew, player.y, player.ew, player.h);
 };
 
 /**
  * Render bouncing ball
  */
-const renderBall = (g: Context2D, ball: IBall) => {
-    if (ball.blink) {
-        g.fillStyle = BALL_COLOR;
-    } else {
+const renderBall = (g: Context2D, ball: IBall, fire: number) => {
+    if (fire) {
+        g.fillStyle = BALL_FIRE_COLOR;
+    } else if (ball.blink) {
         g.fillStyle = HIGHLIGHT_COLOR;
+    } else {
+        g.fillStyle = BALL_COLOR;
     }
     g.fillRect(ball.x, ball.y, ball.w, ball.h);
 };
@@ -49,6 +62,7 @@ const renderBall = (g: Context2D, ball: IBall) => {
  * Render game's UI
  */
 const renderUI = (g: Context2D, score: number, lives: number, lvl: number) => {
+    g.fillStyle = BALL_COLOR;
     g.fillText("S: " + score, 1, 299);
     g.fillText("L: " + lives, 240, 299);
     if (lvl < 10) {
@@ -63,7 +77,8 @@ const renderUI = (g: Context2D, score: number, lives: number, lvl: number) => {
  */
 export const render = (g: Context2D, appState: IAppState) => {
     renderBlocks(g, appState.stage.blocks, appState.blockSize.w, appState.blockSize.h);
+    renderItems(g, appState.items);
     renderPlayer(g, appState.player);
-    renderBall(g, appState.ball);
+    renderBall(g, appState.ball, appState.player.powerUps.fire.timeleft);
     renderUI(g, appState.score.score, appState.score.lives, appState.score.level);
 };

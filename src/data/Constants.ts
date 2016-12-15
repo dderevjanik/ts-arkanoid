@@ -1,6 +1,10 @@
-export const BALL_COLOR = 'yellow';
-export const PLAYER_COLOR = 'white';
 export const HIGHLIGHT_COLOR = '#00FFFF';
+
+export const BALL_COLOR = 'yellow';
+export const BALL_FIRE_COLOR = 'red';
+
+export const PLAYER_COLOR = 'white';
+export const PLAYER_PWR_COLOR = 'cyan';
 
 export const START_LIVES = 3;
 export const START_SCORE = 0;
@@ -13,6 +17,8 @@ export const SCORE_PER_LVL = 1000;
 
 export const BALL_SPEED_INC_PER_LVL = 2;
 
+export const PADDLE_INIT_W = 80;
+export const PADDLE_INIT_EW = 15;
 export const PADDLE_INIT_X = 110;
 export const PADDLE_INIT_Y = 280;
 

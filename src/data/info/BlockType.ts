@@ -1,4 +1,4 @@
-import { IBlockType } from './../interfaces/IBlockType';
+import { IBlockType } from './../../interfaces/IBlockType';
 
 export const BlockType: IBlockType[] = [
     { fillColor: '#BABABA', score: 100 },

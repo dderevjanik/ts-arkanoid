@@ -1,4 +1,4 @@
 export interface IBlockType {
-    fillColor: string;
-    score: number;
-}
+    readonly fillColor: string;
+    readonly score: number;
+};

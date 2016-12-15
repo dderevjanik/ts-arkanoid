@@ -7,6 +7,7 @@ import { IPlayer } from './interfaces/IPlayer';
 import { render, clearScreen } from './Render';
 import { generateNewLevel } from './Stage';
 import { EKeyState } from './enums/EKeyState';
+import { EPowerUp } from './enums/EPowerUp';
 import { addControlListeners, handleControls, clearControls } from './Controls';
 import {
     inCollision, getCollisions,
@@ -14,7 +15,10 @@ import {
     isOutsideDown, isOutsideUp,
     getBlockScore, resetPositions
 } from './Mechanics';
-import { START_LIVES, START_SCORE, START_LEVEL } from './data/Constants';
+import {
+    START_LIVES, START_SCORE, START_LEVEL,
+    PADDLE_INIT_W, PADDLE_INIT_EW
+} from './data/Constants';
 
 canvasEl.width = 300;
 canvasEl.height = 300;
@@ -78,7 +82,9 @@ const dealWithCollision = (state: IAppState) => {
     const ball = state.ball;
     const player = state.player;
     const collisions = getCollisions(state.ball, state.stage.blocks);
-    ball.dy = (collisions.length % 2 === 0) ? ball.dy : -ball.dy;
+    if (!state.player.powerUps.fire.timeleft) {
+        ball.dy = ((collisions.length % 2) === 0) ? ball.dy : -ball.dy;
+    }
 
     // remove all blocks with collision, add score and decrease blocks count
     collisions.forEach((block) => {
@@ -87,6 +93,17 @@ const dealWithCollision = (state: IAppState) => {
         state.stage.blocks.splice(index, 1);
         state.stage.blockCount -= 1;
         // if number of blocks are 0, create new level
+        state.nextItem -= 1;
+        if (state.nextItem === 0) {
+            state.nextItem = Math.floor(Math.random() * 15) + 3;
+            state.items.push({
+                type: EPowerUp.FIRE,
+                x: block.x,
+                y: block.y,
+                w: 20,
+                h: 20
+            });
+        }
         if (state.stage.blockCount === 0) {
             generateNewLevel(state);
             resetPositions(state.player, state.ball);
@@ -95,12 +112,49 @@ const dealWithCollision = (state: IAppState) => {
         }
     });
 
-    // check if playes is in collision with player
+    // check if ball is in collision with player
     if (inCollision(state.player, state.ball)) {
+        // if ((ball.x < state.player.x + 20) && (ball.dx < 0)) {
+        //     ball.dx += 0.5;
+        // } else if ((ball.x > state.player.x + state.player.w - 20) && (ball.dx > 0)) {
+        //     ball.dx += 0.5;
+        // }
         ball.dy = -ball.dy;
     }
 
+    const items = getCollisions(state.player, state.items);
+    items.forEach((item) => {
+        if (item.type === EPowerUp.SIZE) {
+            state.player.powerUps.size.timeleft = 300;
+        } else if (item.type === EPowerUp.FIRE) {
+            state.player.powerUps.fire.timeleft = 150;
+        }
+        state.items.splice(state.items.indexOf(item), 1);
+    });
+
+    state.items.forEach((item) => {
+        item.y += 5;
+    })
+
 };
+
+const handlePowerUps = (state: IAppState) => {
+    const powerups = state.player.powerUps;
+    if (powerups.fire.timeleft) {
+        powerups.fire.timeleft -= 1;
+    }
+    if (powerups.size.timeleft) {
+        if (powerups.size.timeleft === 300) {
+            state.player.x -= PADDLE_INIT_EW;
+        }
+        state.player.w = (PADDLE_INIT_W + (2 * PADDLE_INIT_EW));
+        powerups.size.timeleft -= 1;
+        if (powerups.size.timeleft = 0) {
+            state.player.w = PADDLE_INIT_W;
+        }
+        console.log(powerups.size.timeleft);
+    }
+}
 
 /**
  * Update current state
@@ -108,6 +162,7 @@ const dealWithCollision = (state: IAppState) => {
 const update = (state: IAppState) => {
     clearScreen(canvas.g, canvas.w, canvas.h);
     handleControls(state.player, state.controls);
+    handlePowerUps(state);
     updateBall(state);
     dealWithCollision(state);
     render(canvas.g, state);
@@ -118,4 +173,12 @@ window.onload = () => {
     addControlListeners(InitState.controls);
     generateNewLevel(InitState);
     update(InitState);
+
+    const pwrSize: any = document.getElementById('powerup-size');
+    pwrSize.addEventListener('mousedown', () => {
+        // InitState.player.powerUps = (InitState.player.powerUps & EPowerUp.Size);
+        // InitState.player.x -= 10;
+        // InitState.player.pwrSize = 10;
+        // InitState.player.w = 100;
+    });
 };

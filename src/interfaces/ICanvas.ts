@@ -1,6 +1,6 @@
 import { ISize } from './ISize';
 
 export interface ICanvas extends ISize {
-    el: HTMLCanvasElement|any;
-    g: CanvasRenderingContext2D|any;
-}
+    readonly el: HTMLCanvasElement|any;
+    readonly g: CanvasRenderingContext2D|any;
+};
