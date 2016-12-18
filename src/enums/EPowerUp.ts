@@ -1,5 +1,4 @@
 export enum EPowerUp {
-    NONE,
-    SIZE,
-    FIRE
+    SIZE = 0,
+    FIRE = 1
 }

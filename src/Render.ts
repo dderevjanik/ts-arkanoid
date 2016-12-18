@@ -4,6 +4,7 @@ import { IBlock } from './interfaces/IBlock';
 import { IPlayer } from './interfaces/IPlayer';
 import { IItem } from './interfaces/IItem';
 import { BlockType } from './data/info/BlockType';
+import { PowerType } from './data/info/PowerType';
 import { BALL_COLOR, PLAYER_COLOR, HIGHLIGHT_COLOR, PLAYER_PWR_COLOR, BALL_FIRE_COLOR } from './data/Constants';
 
 type Context2D = CanvasRenderingContext2D;
@@ -28,8 +29,11 @@ const renderBlocks = (g: Context2D, blocks: IBlock[], w: number, h: number) => {
 
 const renderItems = (g: Context2D, items: IItem[]) => {
     items.forEach((item) => {
+        console.log(item.type);
         g.fillStyle = 'yellow';
         g.fillRect(item.x, item.y, item.w, item.h);
+        g.fillStyle = 'white';
+        g.fillText(PowerType[item.type].char, item.x, item.y);
     });
 };
 

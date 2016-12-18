@@ -9,6 +9,7 @@ import { generateNewLevel } from './Stage';
 import { EKeyState } from './enums/EKeyState';
 import { EPowerUp } from './enums/EPowerUp';
 import { addControlListeners, handleControls, clearControls } from './Controls';
+import { createPowerUp, handlePowerUps } from './PowerUp';
 import {
     inCollision, getCollisions,
     isOutsideLeft, isOutsideRight,
@@ -95,14 +96,8 @@ const dealWithCollision = (state: IAppState) => {
         // if number of blocks are 0, create new level
         state.nextItem -= 1;
         if (state.nextItem === 0) {
-            state.nextItem = Math.floor(Math.random() * 15) + 3;
-            state.items.push({
-                type: EPowerUp.FIRE,
-                x: block.x,
-                y: block.y,
-                w: 20,
-                h: 20
-            });
+            state.nextItem = Math.floor(Math.random() * 15) + 5;
+            state.items.push(createPowerUp(block.x, block.y));
         }
         if (state.stage.blockCount === 0) {
             generateNewLevel(state);
@@ -138,23 +133,7 @@ const dealWithCollision = (state: IAppState) => {
 
 };
 
-const handlePowerUps = (state: IAppState) => {
-    const powerups = state.player.powerUps;
-    if (powerups.fire.timeleft) {
-        powerups.fire.timeleft -= 1;
-    }
-    if (powerups.size.timeleft) {
-        if (powerups.size.timeleft === 300) {
-            state.player.x -= PADDLE_INIT_EW;
-        }
-        state.player.w = (PADDLE_INIT_W + (2 * PADDLE_INIT_EW));
-        powerups.size.timeleft -= 1;
-        if (powerups.size.timeleft = 0) {
-            state.player.w = PADDLE_INIT_W;
-        }
-        console.log(powerups.size.timeleft);
-    }
-}
+
 
 /**
  * Update current state

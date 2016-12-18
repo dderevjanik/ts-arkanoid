@@ -1,7 +1,8 @@
 import { IAppState } from './../interfaces/IAppState';
 import { EKeyState } from './../enums/EKeyState';
 import { EPowerUp } from './../enums/EPowerUp';
-import * as CONST from './../data/Constants';
+import { PowerType } from './info/PowerType';
+import * as CONST from './Constants';
 
 /**
  * Initial state of Game
@@ -43,11 +44,15 @@ export const InitState: IAppState = {
         powerUps: {
             size: {
                 type: EPowerUp.SIZE,
-                timeleft: 0
+                timeleft: 0,
+                duration: PowerType[EPowerUp.SIZE].duration,
+                char: PowerType[EPowerUp.SIZE].char
             },
             fire: {
                 type: EPowerUp.FIRE,
-                timeleft: 0
+                timeleft: 0,
+                duration: PowerType[EPowerUp.FIRE].duration,
+                char: PowerType[EPowerUp.FIRE].char
             }
         }
     },
