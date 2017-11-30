@@ -3,3 +3,4 @@ node_modules/
 
 # compiled typescript files
 src/**/*.js
+build/js/**/*.js
